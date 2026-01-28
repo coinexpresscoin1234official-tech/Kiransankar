@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kiran Sankar Apps</title>
+<style>
+:root{
+  --bg1:#0B0F14;--bg2:#12192A;--card:#101624cc;
+  --accent:#C62828;--accent2:#8B1E1E;--steel:#3B4C6B;
+  --text:#E6EAF2;--muted:#9AA3B2;--error:#E53935;
+}
+body{margin:0;font-family:system-ui,Segoe UI,sans-serif;background:radial-gradient(circle at top,var(--bg2),var(--bg1));color:var(--text);overflow-x:hidden;}
+.header{text-align:center;padding:18px;font-size:14px;color:var(--muted);} 
+.footer{position:fixed;right:14px;bottom:10px;font-size:12px;color:var(--muted);} 
+#stars{position:fixed;inset:0;z-index:-1;}
+.card{background:linear-gradient(180deg,#0f1524cc,#0b0f14cc);border:1px solid #2a334a;border-radius:22px;box-shadow:0 0 25px rgba(0,0,0,.6);padding:28px;margin:22px;backdrop-filter:blur(10px);} 
+.spacious{padding:34px;}
+.hex-btn{position:relative;display:block;width:100%;padding:16px 22px;margin:14px 0;color:#fff;font-size:16px;font-weight:600;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;cursor:pointer;clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);box-shadow:0 0 14px rgba(198,40,40,.45);} 
+.hex-btn.secondary{background:linear-gradient(135deg,#1a2236,#0f1524);box-shadow:0 0 12px rgba(77,208,225,.15);} 
+.hex-btn:after{content:'';position:absolute;right:10px;bottom:6px;width:20px;height:2px;background:linear-gradient(90deg,transparent,#4DD0E1);} 
+input,select{width:100%;padding:14px 16px;margin:10px 0;border-radius:14px;border:1px solid #2a334a;background:#0f1524;color:var(--text);box-sizing:border-box;} 
+input.error{border-color:var(--error);}
+.helper{color:var(--error);font-size:13px;display:none;margin-top:-6px;}
+h1,h2,h3{color:#E53935;margin-top:0;} 
+.list-item{padding:18px;border-bottom:1px solid #2a334a;cursor:pointer;} 
+.about-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:1000;} 
+.about-box{background:#0f1524;border:1px solid #2a334a;border-radius:22px;padding:26px;width:92%;max-width:460px;} 
+.reveal{animation:fadeIn .4s ease forwards;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="header">Made by human on Earth 🌎</div>
+<div id="app"></div>
+<div class="footer">Made by Kiran Sankar</div>
+<script>
+const IG_URL='https://instagram.com/kiransankar_';
+
+// Starfield
+const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
+resize();
+addEventListener('resize',resize);
+let stars=Array.from({length:160},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.6}));
+function drawStars(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#fff';stars.forEach(s=>{ctx.globalAlpha=Math.random();ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();});requestAnimationFrame(drawStars);}
+drawStars();
+
+const apps=[
+  {id:'age',name:'Age Calculator',desc:'Exact age & target countdown',render:renderAge},
+  {id:'lcmhcf',name:'LCM & HCF Calculator',desc:'Up to 10 numbers',render:renderLcmHcf},
+  {id:'bmi',name:'BMI Calculator',desc:'BMI with WHO standards',render:renderBmi},
+  {id:'zodiac',name:'Zodiac Finder',desc:'Sign & meanings',render:renderZodiac}
+];
+
+function router(){
+  const h=location.hash.replace('#/','');
+  if(!h||h==='home')renderHome();
+  else if(h==='apps')renderAppList();
+  else{const a=apps.find(x=>x.id===h);a?a.render():renderHome();}
+}
+addEventListener('hashchange',router);
+
+function renderHome(){
+  app.innerHTML=`<div class='card spacious'>
+    <h1>Hey, I'm Kiran Sankar.</h1>
+    <p>I create simple tools that solve small but real problems. This space connects all the apps I've built to make calculations and everyday tasks more convenient.</p>
+    <button class='hex-btn' onclick="openIG()">Connect with Creator</button>
+    <button class='hex-btn secondary' onclick="location.hash='#/apps'">Apps by Kiran Sankar</button>
+  </div>`;
+}
+
+function renderAppList(){
+  let list=apps.map(a=>`<div class='list-item' onclick="location.hash='#/${a.id}'"><strong>${a.name}</strong><br><small>${a.desc}</small></div>`).join('');
+  app.innerHTML=`<div class='card spacious'><h2>Apps by Kiran Sankar</h2>${list}<button class='hex-btn secondary' onclick="location.hash='#/home'">Home</button></div>`;
+}
+
+function openIG(){window.open(IG_URL,'_blank');}
+
+function commonFooter(id){
+  return `<button class='hex-btn' onclick="openIG()">Connect with Creator</button><button class='hex-btn secondary' onclick="location.hash='#/apps'">Other Apps</button><button class='hex-btn secondary' onclick="showAbout('${id}')">About This App</button>`;
+}
+
+const aboutText={
+  age:'Precise real-time age & countdown tool. Created by Kiran Sankar with the assistance of AI.',
+  lcmhcf:'LCM & HCF for up to 10 numbers. Created by Kiran Sankar with the assistance of AI.',
+  bmi:'Body Mass Index calculator with WHO standards. Created by Kiran Sankar with the assistance of AI.',
+  zodiac:'Zodiac sign finder and meanings. Created by Kiran Sankar with the assistance of AI.'
+};
+
+function showAbout(id){
+  const m=document.createElement('div');
+  m.className='about-modal';
+  m.innerHTML=`<div class='about-box'><h2>About This App</h2><p>${aboutText[id]}</p><p style='color:#E53935;font-weight:600;'>Created by: Kiran Sankar (with the help of AI)</p><button class='hex-btn secondary' onclick="this.closest('.about-modal').remove()">Close</button></div>`;
+  document.body.appendChild(m);
+}
+
+// AGE CALCULATOR
+let ageTimer;
+function renderAge(){
+  app.innerHTML=`<div class='card spacious'><h2>Age Calculator</h2>
+    <input id='uname' placeholder='Your Name'>
+    <div class='grid'>
+      <input id='dobDD' placeholder='DD'>
+      <input id='dobMM' placeholder='MM'>
+      <input id='dobYY' placeholder='YYYY'>
+    </div>
+    <div id='dobHelp' class='helper'>Enter a valid date.</div>
+    <input id='targetAge' placeholder='Target Age (optional)'>
+    <button class='hex-btn' onclick='startAgeCalc()'>Calculate Now</button>
+    <div id='ageResult'></div>${commonFooter('age')}</div>`;
+}
+
+function parseDOBParts(){
+  const dd=+dobDD.value,mm=+dobMM.value,yy=+dobYY.value;
+  if(!dd||!mm||!yy||dd<1||dd>31||mm<1||mm>12||yy<1900){
+    dobHelp.style.display='block';
+    [dobDD,dobMM,dobYY].forEach(i=>i.classList.add('error'));
+    return null;
+  }
+  dobHelp.style.display='none';
+  [dobDD,dobMM,dobYY].forEach(i=>i.classList.remove('error'));
+  return new Date(yy,mm-1,dd);
+}
+
+function startAgeCalc(){
+  clearInterval(ageTimer);
+  const dob=parseDOBParts();
+  if(!dob)return;
+  const name=uname.value||'User';
+  const target=parseFloat(targetAge.value);
+  ageTimer=setInterval(()=>{
+    const now=new Date();
+    let diff=now-dob;
+    const y=Math.floor(diff/31557600000);
+    diff-=y*31557600000;
+    const mo=Math.floor(diff/2629800000);
+    diff-=mo*2629800000;
+    const d=Math.floor(diff/86400000);
+    diff-=d*86400000;
+    const h=Math.floor(diff/3600000);
+    diff-=h*3600000;
+    const mi=Math.floor(diff/60000);
+    diff-=mi*60000;
+    const s=Math.floor(diff/1000);
+    let out=`<div class='reveal'><p>${name}, your age:</p><strong>${y}y ${mo}m ${d}d ${h}h ${mi}m ${s}s</strong>`;
+    if(!isNaN(target)){
+      const remain=target*31557600000-(now-dob);
+      if(remain>0){
+        let r=remain;
+        const ry=Math.floor(r/31557600000);
+        r-=ry*31557600000;
+        const rmo=Math.floor(r/2629800000);
+        r-=rmo*2629800000;
+        const rd=Math.floor(r/86400000);
+        r-=rd*86400000;
+        const rh=Math.floor(r/3600000);
+        r-=rh*3600000;
+        const rmi=Math.floor(r/60000);
+        r-=rmi*60000;
+        const rs=Math.floor(r/1000);
+        out+=`<p>Time left to ${target}:</p><strong>${ry}y ${rmo}m ${rd}d ${rh}h ${rmi}m ${rs}s</strong>`;
+      }else out+=`<p>You already crossed ${target}.</p>`;
+    }
+    out+='</div>';
+    ageResult.innerHTML=out;
+  },1000);
+}
+
+// LCM & HCF
+let parsedNums=[];
+function renderLcmHcf(){
+  app.innerHTML=`<div class='card spacious'><h2>LCM & HCF</h2><input id='nums' placeholder='Enter up to 10 numbers, comma separated'><div id='numsHelp' class='helper'>Enter 2–10 valid numbers.</div><button class='hex-btn' onclick='processNums()'>Process</button><div id='lhPopup'></div><div id='lhResult'></div>${commonFooter('lcmhcf')}</div>`;
+}
+
+function processNums(){
+  const raw=nums.value.split(',').map(n=>parseInt(n.trim())).filter(n=>!isNaN(n));
+  if(raw.length<2||raw.length>10){
+    nums.classList.add('error');
+    numsHelp.style.display='block';
+    return;
+  }
+  nums.classList.remove('error');
+  numsHelp.style.display='none';
+  parsedNums=raw;
+  lhPopup.innerHTML=`<div class='reveal'><p>Numbers accepted.</p><button class='hex-btn secondary' onclick='showLCM()'>Show LCM</button><button class='hex-btn secondary' onclick='showHCF()'>Show HCF</button></div>`;
+}
+
+function gcd(a,b){return b?gcd(b,a%b):a;}
+function lcm(a,b){return a*b/gcd(a,b);}
+function showLCM(){lhResult.innerHTML=`<div class='reveal'><p>LCM: ${parsedNums.reduce((a,b)=>lcm(a,b))}</p></div>`;}
+function showHCF(){lhResult.innerHTML=`<div class='reveal'><p>HCF: ${parsedNums.reduce((a,b)=>gcd(a,b))}</p></div>`;}
+
+// BMI CALCULATOR
+function renderBmi(){
+  app.innerHTML=`<div class='card spacious'><h2>BMI Calculator</h2><p style='color:var(--muted)'>Note: BMI does not depend on sex or gender. It is a universal index.</p>
+    <input id='ageB' placeholder='Age'>
+    <select id='sex'><option>Male</option><option>Female</option><option>Third Gender</option><option>Rather Not Say</option></select>
+    <select id='wUnit'><option value='kg'>kg</option><option value='lb'>lb</option></select><input id='w' placeholder='Weight'>
+    <select id='hUnit'><option value='m'>m</option><option value='cm'>cm</option><option value='ft'>ft</option><option value='in'>in</option></select><input id='h' placeholder='Height'>
+    <button class='hex-btn' onclick='calcBmi()'>Calculate</button>
+    <div id='bmiHelp' class='helper'>Enter valid height and weight.</div>
+    <div id='bmiResult'></div>
+    <div class='reveal' style='margin-top:16px'><h3>WHO BMI Classification</h3>
+    <p>Underweight: &lt; 18.5</p>
+    <p>Normal: 18.5 – 24.9</p>
+    <p>Overweight: 25 – 29.9</p>
+    <p>Obese: ≥ 30</p></div>
+    ${commonFooter('bmi')}</div>`;
+}
+
+function calcBmi(){
+  let weight=parseFloat(w.value),height=parseFloat(h.value);
+  if(!weight||!height){
+    bmiHelp.style.display='block';
+    return;
+  }
+  bmiHelp.style.display='none';
+  if(wUnit.value==='lb')weight*=0.453592;
+  if(hUnit.value==='cm')height/=100;
+  if(hUnit.value==='ft')height*=0.3048;
+  if(hUnit.value==='in')height*=0.0254;
+  const bmi=weight/(height*height);
+  let status='';
+  if(bmi<18.5)status='Underweight';
+  else if(bmi<25)status='Normal';
+  else if(bmi<30)status='Overweight';
+  else status='Obese';
+  bmiResult.innerHTML=`<div class='reveal'><p>Your BMI: ${bmi.toFixed(2)}</p><p>Status (WHO): ${status}</p></div>`;
+}
+
+// ZODIAC FINDER
+const zodiacInfo={
+  Aries:{traits:'Bold, energetic',strengths:'Courage, leadership',weaknesses:'Impulsive',lucky:'Red',compat:'Leo, Sagittarius'},
+  Taurus:{traits:'Reliable, calm',strengths:'Patience',weaknesses:'Stubborn',lucky:'Green',compat:'Virgo, Capricorn'},
+  Gemini:{traits:'Curious, adaptable',strengths:'Communication',weaknesses:'Inconsistent',lucky:'Yellow',compat:'Libra, Aquarius'},
+  Cancer:{traits:'Emotional, caring',strengths:'Loyalty',weaknesses:'Moody',lucky:'Silver',compat:'Scorpio, Pisces'},
+  Leo:{traits:'Confident, bold',strengths:'Leadership',weaknesses:'Arrogant',lucky:'Gold',compat:'Aries, Sagittarius'},
+  Virgo:{traits:'Analytical, practical',strengths:'Precision',weaknesses:'Overcritical',lucky:'Green',compat:'Taurus, Capricorn'},
+  Libra:{traits:'Balanced, fair',strengths:'Diplomacy',weaknesses:'Indecisive',lucky:'Blue',compat:'Gemini, Aquarius'},
+  Scorpio:{traits:'Intense, passionate',strengths:'Focus',weaknesses:'Jealous',lucky:'Black',compat:'Cancer, Pisces'},
+  Sagittarius:{traits:'Adventurous, optimistic',strengths:'Freedom',weaknesses:'Blunt',lucky:'Purple',compat:'Aries, Leo'},
+  Capricorn:{traits:'Disciplined, ambitious',strengths:'Responsibility',weaknesses:'Rigid',lucky:'Brown',compat:'Taurus, Virgo'},
+  Aquarius:{traits:'Innovative, independent',strengths:'Originality',weaknesses:'Detached',lucky:'Electric Blue',compat:'Gemini, Libra'},
+  Pisces:{traits:'Dreamy, compassionate',strengths:'Empathy',weaknesses:'Escapist',lucky:'Sea Green',compat:'Cancer, Scorpio'}
+};
+
+function renderZodiac(){
+  app.innerHTML=`<div class='card spacious'><h2>Zodiac Finder</h2>
+    <input id='zname' placeholder='Your Name'>
+    <div class='grid'>
+      <input id='zDD' placeholder='DD'>
+      <input id='zMM' placeholder='MM'>
+      <input id='zYY' placeholder='YYYY'>
+    </div>
+    <div id='zHelp' class='helper'>Enter a valid date.</div>
+    <button class='hex-btn' onclick='findZodiac()'>Find Zodiac</button>
+    <div id='zResult'></div>${commonFooter('zodiac')}</div>`;
+}
+
+function parseZDOB(){
+  const dd=+zDD.value,mm=+zMM.value,yy=+zYY.value;
+  if(!dd||!mm||!yy||dd<1||dd>31||mm<1||mm>12||yy<1900){
+    zHelp.style.display='block';
+    [zDD,zMM,zYY].forEach(i=>i.classList.add('error'));
+    return null;
+  }
+  zHelp.style.display='none';
+  [zDD,zMM,zYY].forEach(i=>i.classList.remove('error'));
+  return new Date(yy,mm-1,dd);
+}
+
+function findZodiac(){
+  zResult.innerHTML='';
+  const d=parseZDOB();
+  if(!d)return;
+  const m=d.getMonth()+1,day=d.getDate();
+  let s='Aries';
+  if((m==3&&day>=21)||(m==4&&day<=19))s='Aries';
+  else if((m==4&&day>=20)||(m==5&&day<=20))s='Taurus';
+  else if((m==5&&day>=21)||(m==6&&day<=20))s='Gemini';
+  else if((m==6&&day>=21)||(m==7&&day<=22))s='Cancer';
+  else if((m==7&&day>=23)||(m==8&&day<=22))s='Leo';
+  else if((m==8&&day>=23)||(m==9&&day<=22))s='Virgo';
+  else if((m==9&&day>=23)||(m==10&&day<=22))s='Libra';
+  else if((m==10&&day>=23)||(m==11&&day<=21))s='Scorpio';
+  else if((m==11&&day>=22)||(m==12&&day<=21))s='Sagittarius';
+  else if((m==12&&day>=22)||(m==1&&day<=19))s='Capricorn';
+  else if((m==1&&day>=20)||(m==2&&day<=18))s='Aquarius';
+  else if((m==2&&day>=19)||(m==3&&day<=20))s='Pisces';
+  zResult.innerHTML=`<div class='reveal'><p>Your Zodiac Sign: <strong>${s}</strong></p><button class='hex-btn secondary' onclick='showZodiacInfo("${s}")'>Know More About Your Zodiac</button></div>`;
+}
+
+function showZodiacInfo(s){
+  const i=zodiacInfo[s];
+  zResult.innerHTML=`<div class='reveal'><p>Your Zodiac Sign: <strong>${s}</strong></p><p>Traits: ${i.traits}</p><p>Strengths: ${i.strengths}</p><p>Weaknesses: ${i.weaknesses}</p><p>Lucky Elements: ${i.lucky}</p><p>Compatibility: ${i.compat}</p></div>`;
+}
+
+const app=document.getElementById('app');
+router();
+</script>
+</body>
+</html>

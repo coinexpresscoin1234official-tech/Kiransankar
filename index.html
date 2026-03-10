@@ -10,24 +10,66 @@
   --text:#E6EAF2;--muted:#9AA3B2;--error:#E53935;
 }
 body{margin:0;font-family:system-ui,Segoe UI,sans-serif;background:radial-gradient(circle at top,var(--bg2),var(--bg1));color:var(--text);overflow-x:hidden;}
-.header{text-align:center;padding:18px;font-size:14px;color:var(--muted);} 
-.footer{position:fixed;right:14px;bottom:10px;font-size:12px;color:var(--muted);} 
+.header{text-align:center;padding:18px;font-size:14px;color:var(--muted);}
+.footer{position:fixed;right:14px;bottom:10px;font-size:12px;color:var(--muted);}
 #stars{position:fixed;inset:0;z-index:-1;}
-.card{background:linear-gradient(180deg,#0f1524cc,#0b0f14cc);border:1px solid #2a334a;border-radius:22px;box-shadow:0 0 25px rgba(0,0,0,.6);padding:28px;margin:22px;backdrop-filter:blur(10px);} 
+.card{background:linear-gradient(180deg,#0f1524cc,#0b0f14cc);border:1px solid #2a334a;border-radius:22px;box-shadow:0 0 25px rgba(0,0,0,.6);padding:28px;margin:22px;backdrop-filter:blur(10px);}
 .spacious{padding:34px;}
-.hex-btn{position:relative;display:block;width:100%;padding:16px 22px;margin:14px 0;color:#fff;font-size:16px;font-weight:600;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;cursor:pointer;clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);box-shadow:0 0 14px rgba(198,40,40,.45);} 
-.hex-btn.secondary{background:linear-gradient(135deg,#1a2236,#0f1524);box-shadow:0 0 12px rgba(77,208,225,.15);} 
-.hex-btn:after{content:'';position:absolute;right:10px;bottom:6px;width:20px;height:2px;background:linear-gradient(90deg,transparent,#4DD0E1);} 
-input,select{width:100%;padding:14px 16px;margin:10px 0;border-radius:14px;border:1px solid #2a334a;background:#0f1524;color:var(--text);box-sizing:border-box;} 
+.hex-btn{position:relative;display:block;width:100%;padding:16px 22px;margin:14px 0;color:#fff;font-size:16px;font-weight:600;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;cursor:pointer;clip-path:polygon(6% 0,94% 0,100% 50%,94% 100%,6% 100%,0 50%);box-shadow:0 0 14px rgba(198,40,40,.45);}
+.hex-btn.secondary{background:linear-gradient(135deg,#1a2236,#0f1524);box-shadow:0 0 12px rgba(77,208,225,.15);}
+.hex-btn:after{content:'';position:absolute;right:10px;bottom:6px;width:20px;height:2px;background:linear-gradient(90deg,transparent,#4DD0E1);}
+input,select{width:100%;padding:14px 16px;margin:10px 0;border-radius:14px;border:1px solid #2a334a;background:#0f1524;color:var(--text);box-sizing:border-box;}
 input.error{border-color:var(--error);}
 .helper{color:var(--error);font-size:13px;display:none;margin-top:-6px;}
-h1,h2,h3{color:#E53935;margin-top:0;} 
-.list-item{padding:18px;border-bottom:1px solid #2a334a;cursor:pointer;} 
-.about-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:1000;} 
-.about-box{background:#0f1524;border:1px solid #2a334a;border-radius:22px;padding:26px;width:92%;max-width:460px;} 
+h1,h2,h3{color:#E53935;margin-top:0;}
+.list-item{padding:18px;border-bottom:1px solid #2a334a;cursor:pointer;}
+.about-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:1000;}
+.about-box{background:#0f1524;border:1px solid #2a334a;border-radius:22px;padding:26px;width:92%;max-width:460px;}
 .reveal{animation:fadeIn .4s ease forwards;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+
+/* ── Password strength extras ── */
+.bar-row{display:flex;gap:6px;margin:10px 0 6px;}
+.bar-seg{flex:1;height:5px;border-radius:10px;background:#1e1e2e;transition:background .4s;}
+.pw-criteria{display:flex;flex-direction:column;gap:7px;margin:10px 0;}
+.criterion{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--muted);transition:color .3s;}
+.criterion.met{color:#4ade80;}
+.crit-dot{width:7px;height:7px;border-radius:50%;background:#2a2838;flex-shrink:0;transition:background .3s,box-shadow .3s;}
+.criterion.met .crit-dot{background:#4ade80;box-shadow:0 0 6px rgba(74,222,128,.5);}
+.verdict-row{display:flex;align-items:center;justify-content:space-between;min-height:38px;margin:6px 0;}
+.verdict-lbl{font-size:1.4rem;font-weight:700;transition:color .3s;}
+.verdict-emoji{font-size:1.5rem;}
+.tip-box{background:#0a0a0e;border:1px solid #2a334a;border-radius:12px;padding:12px 14px;font-size:13px;color:var(--muted);margin-top:6px;}
+.eye-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:4px;}
+.pw-wrap{position:relative;}
+.score-chip{display:inline-block;font-size:12px;background:#1a1a2e;border:1px solid #2a2840;border-radius:20px;padding:3px 12px;color:var(--muted);margin-top:2px;}
+.score-num{font-weight:700;}
+
+/* ── Day Finder extras ── */
+.day-result-box{background:#0a0a0e;border:1px solid #2a334a;border-radius:14px;padding:18px;text-align:center;margin:10px 0;}
+.day-big{font-size:2rem;font-weight:800;color:#f0c040;letter-spacing:-1px;text-shadow:0 0 30px rgba(240,192,64,.35);}
+.day-date-lbl{font-size:13px;color:var(--muted);margin-bottom:4px;}
+.neighbors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0;}
+.nbr{background:#0a0a0e;border:1px solid #2a334a;border-radius:12px;padding:12px;text-align:center;}
+.nbr-lbl{font-size:11px;color:var(--muted);margin-bottom:3px;letter-spacing:1px;text-transform:uppercase;}
+.nbr-day{font-size:1.1rem;font-weight:700;color:#a0a0c0;}
+.nbr-date{font-size:11px;color:var(--muted);margin-top:2px;}
+.iq-box{background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid rgba(124,111,255,.3);border-radius:12px;padding:14px;text-align:center;margin:8px 0;font-size:13px;color:#a89fff;line-height:1.6;}
+.iq-box strong{color:#c4b5fd;}
+
+/* ── Day Finder loading ── */
+.day-loading{display:none;flex-direction:column;align-items:center;padding:18px 0;}
+.spinner-wrap{position:relative;width:80px;height:80px;margin-bottom:20px;}
+.sp-ring{position:absolute;inset:0;border-radius:50%;border:3px solid transparent;}
+.sp-ring.r1{border-top-color:#f0c040;animation:spin 1s linear infinite;}
+.sp-ring.r2{inset:10px;border-right-color:#e05a5a;animation:spin 1.5s linear infinite reverse;}
+.sp-ring.r3{inset:22px;border-bottom-color:#7c6fff;animation:spin .8s linear infinite;}
+.sp-center{position:absolute;inset:35px;background:#f0c040;border-radius:50%;animation:spulse 1s ease-in-out infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes spulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+.load-phrase{font-size:13px;color:#f0c040;text-align:center;min-height:32px;max-width:240px;opacity:0;animation:phraseIn .5s ease forwards;}
+@keyframes phraseIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
@@ -35,10 +77,11 @@ h1,h2,h3{color:#E53935;margin-top:0;}
 <div class="header">Made by human on Earth 🌎</div>
 <div id="app"></div>
 <div class="footer">Made by Kiran Sankar</div>
+
 <script>
 const IG_URL='https://instagram.com/kiransankar_';
 
-// Starfield
+/* ── Starfield ── */
 const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');
 function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
 resize();
@@ -47,21 +90,27 @@ let stars=Array.from({length:160},()=>({x:Math.random()*canvas.width,y:Math.rand
 function drawStars(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#fff';stars.forEach(s=>{ctx.globalAlpha=Math.random();ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();});requestAnimationFrame(drawStars);}
 drawStars();
 
+/* ── App registry ── */
 const apps=[
-  {id:'age',name:'Age Calculator',desc:'Exact age & target countdown',render:renderAge},
-  {id:'lcmhcf',name:'LCM & HCF Calculator',desc:'Up to 10 numbers',render:renderLcmHcf},
-  {id:'bmi',name:'BMI Calculator',desc:'BMI with WHO standards',render:renderBmi},
-  {id:'zodiac',name:'Zodiac Finder',desc:'Sign & meanings',render:renderZodiac}
+  {id:'age',    name:'Age Calculator',          desc:'Exact age & target countdown',     render:renderAge},
+  {id:'lcmhcf', name:'LCM & HCF Calculator',    desc:'Up to 10 numbers',                 render:renderLcmHcf},
+  {id:'bmi',    name:'BMI Calculator',           desc:'BMI with WHO standards',           render:renderBmi},
+  {id:'zodiac', name:'Zodiac Finder',            desc:'Sign & meanings',                  render:renderZodiac},
+  {id:'dayf',   name:'What Day Was It?',         desc:'Find the weekday of any date',     render:renderDayFinder},
+  {id:'passck', name:'Password Strength Checker',desc:'How strong is your password?',    render:renderPasswordChecker}
 ];
 
+/* ── Router ── */
+const app=document.getElementById('app');
 function router(){
   const h=location.hash.replace('#/','');
-  if(!h||h==='home')renderHome();
-  else if(h==='apps')renderAppList();
+  if(!h||h==='home') renderHome();
+  else if(h==='apps') renderAppList();
   else{const a=apps.find(x=>x.id===h);a?a.render():renderHome();}
 }
 addEventListener('hashchange',router);
 
+/* ── Home ── */
 function renderHome(){
   app.innerHTML=`<div class='card spacious'>
     <h1>Hey, I'm Kiran Sankar.</h1>
@@ -71,6 +120,7 @@ function renderHome(){
   </div>`;
 }
 
+/* ── App list ── */
 function renderAppList(){
   let list=apps.map(a=>`<div class='list-item' onclick="location.hash='#/${a.id}'"><strong>${a.name}</strong><br><small>${a.desc}</small></div>`).join('');
   app.innerHTML=`<div class='card spacious'><h2>Apps by Kiran Sankar</h2>${list}<button class='hex-btn secondary' onclick="location.hash='#/home'">Home</button></div>`;
@@ -78,15 +128,19 @@ function renderAppList(){
 
 function openIG(){window.open(IG_URL,'_blank');}
 
+/* ── Common footer ── */
 function commonFooter(id){
   return `<button class='hex-btn' onclick="openIG()">Connect with Creator</button><button class='hex-btn secondary' onclick="location.hash='#/apps'">Other Apps</button><button class='hex-btn secondary' onclick="showAbout('${id}')">About This App</button>`;
 }
 
+/* ── About texts ── */
 const aboutText={
-  age:'Precise real-time age & countdown tool. Created by Kiran Sankar with the assistance of AI.',
-  lcmhcf:'LCM & HCF for up to 10 numbers. Created by Kiran Sankar with the assistance of AI.',
-  bmi:'Body Mass Index calculator with WHO standards. Created by Kiran Sankar with the assistance of AI.',
-  zodiac:'Zodiac sign finder and meanings. Created by Kiran Sankar with the assistance of AI.'
+  age:    'Precise real-time age & countdown tool. Created by Kiran Sankar with the assistance of AI.',
+  lcmhcf: 'LCM & HCF for up to 10 numbers. Created by Kiran Sankar with the assistance of AI.',
+  bmi:    'Body Mass Index calculator with WHO standards. Created by Kiran Sankar with the assistance of AI.',
+  zodiac: 'Zodiac sign finder and meanings. Created by Kiran Sankar with the assistance of AI.',
+  dayf:   'Find the weekday of any date in history. Created by Kiran Sankar with the assistance of AI.',
+  passck: 'Real-time password strength analyser. Nothing is stored or sent. Created by Kiran Sankar with the assistance of AI.'
 };
 
 function showAbout(id){
@@ -96,7 +150,9 @@ function showAbout(id){
   document.body.appendChild(m);
 }
 
-// AGE CALCULATOR
+/* ═══════════════════════════════════════
+   AGE CALCULATOR
+═══════════════════════════════════════ */
 let ageTimer;
 function renderAge(){
   app.innerHTML=`<div class='card spacious'><h2>Age Calculator</h2>
@@ -133,32 +189,22 @@ function startAgeCalc(){
   ageTimer=setInterval(()=>{
     const now=new Date();
     let diff=now-dob;
-    const y=Math.floor(diff/31557600000);
-    diff-=y*31557600000;
-    const mo=Math.floor(diff/2629800000);
-    diff-=mo*2629800000;
-    const d=Math.floor(diff/86400000);
-    diff-=d*86400000;
-    const h=Math.floor(diff/3600000);
-    diff-=h*3600000;
-    const mi=Math.floor(diff/60000);
-    diff-=mi*60000;
+    const y=Math.floor(diff/31557600000);diff-=y*31557600000;
+    const mo=Math.floor(diff/2629800000);diff-=mo*2629800000;
+    const d=Math.floor(diff/86400000);diff-=d*86400000;
+    const h=Math.floor(diff/3600000);diff-=h*3600000;
+    const mi=Math.floor(diff/60000);diff-=mi*60000;
     const s=Math.floor(diff/1000);
     let out=`<div class='reveal'><p>${name}, your age:</p><strong>${y}y ${mo}m ${d}d ${h}h ${mi}m ${s}s</strong>`;
     if(!isNaN(target)){
       const remain=target*31557600000-(now-dob);
       if(remain>0){
         let r=remain;
-        const ry=Math.floor(r/31557600000);
-        r-=ry*31557600000;
-        const rmo=Math.floor(r/2629800000);
-        r-=rmo*2629800000;
-        const rd=Math.floor(r/86400000);
-        r-=rd*86400000;
-        const rh=Math.floor(r/3600000);
-        r-=rh*3600000;
-        const rmi=Math.floor(r/60000);
-        r-=rmi*60000;
+        const ry=Math.floor(r/31557600000);r-=ry*31557600000;
+        const rmo=Math.floor(r/2629800000);r-=rmo*2629800000;
+        const rd=Math.floor(r/86400000);r-=rd*86400000;
+        const rh=Math.floor(r/3600000);r-=rh*3600000;
+        const rmi=Math.floor(r/60000);r-=rmi*60000;
         const rs=Math.floor(r/1000);
         out+=`<p>Time left to ${target}:</p><strong>${ry}y ${rmo}m ${rd}d ${rh}h ${rmi}m ${rs}s</strong>`;
       }else out+=`<p>You already crossed ${target}.</p>`;
@@ -168,7 +214,9 @@ function startAgeCalc(){
   },1000);
 }
 
-// LCM & HCF
+/* ═══════════════════════════════════════
+   LCM & HCF
+═══════════════════════════════════════ */
 let parsedNums=[];
 function renderLcmHcf(){
   app.innerHTML=`<div class='card spacious'><h2>LCM & HCF</h2><input id='nums' placeholder='Enter up to 10 numbers, comma separated'><div id='numsHelp' class='helper'>Enter 2–10 valid numbers.</div><button class='hex-btn' onclick='processNums()'>Process</button><div id='lhPopup'></div><div id='lhResult'></div>${commonFooter('lcmhcf')}</div>`;
@@ -177,12 +225,9 @@ function renderLcmHcf(){
 function processNums(){
   const raw=nums.value.split(',').map(n=>parseInt(n.trim())).filter(n=>!isNaN(n));
   if(raw.length<2||raw.length>10){
-    nums.classList.add('error');
-    numsHelp.style.display='block';
-    return;
+    nums.classList.add('error');numsHelp.style.display='block';return;
   }
-  nums.classList.remove('error');
-  numsHelp.style.display='none';
+  nums.classList.remove('error');numsHelp.style.display='none';
   parsedNums=raw;
   lhPopup.innerHTML=`<div class='reveal'><p>Numbers accepted.</p><button class='hex-btn secondary' onclick='showLCM()'>Show LCM</button><button class='hex-btn secondary' onclick='showHCF()'>Show HCF</button></div>`;
 }
@@ -192,7 +237,9 @@ function lcm(a,b){return a*b/gcd(a,b);}
 function showLCM(){lhResult.innerHTML=`<div class='reveal'><p>LCM: ${parsedNums.reduce((a,b)=>lcm(a,b))}</p></div>`;}
 function showHCF(){lhResult.innerHTML=`<div class='reveal'><p>HCF: ${parsedNums.reduce((a,b)=>gcd(a,b))}</p></div>`;}
 
-// BMI CALCULATOR
+/* ═══════════════════════════════════════
+   BMI CALCULATOR
+═══════════════════════════════════════ */
 function renderBmi(){
   app.innerHTML=`<div class='card spacious'><h2>BMI Calculator</h2><p style='color:var(--muted)'>Note: BMI does not depend on sex or gender. It is a universal index.</p>
     <input id='ageB' placeholder='Age'>
@@ -203,19 +250,13 @@ function renderBmi(){
     <div id='bmiHelp' class='helper'>Enter valid height and weight.</div>
     <div id='bmiResult'></div>
     <div class='reveal' style='margin-top:16px'><h3>WHO BMI Classification</h3>
-    <p>Underweight: &lt; 18.5</p>
-    <p>Normal: 18.5 – 24.9</p>
-    <p>Overweight: 25 – 29.9</p>
-    <p>Obese: ≥ 30</p></div>
+    <p>Underweight: &lt; 18.5</p><p>Normal: 18.5 – 24.9</p><p>Overweight: 25 – 29.9</p><p>Obese: ≥ 30</p></div>
     ${commonFooter('bmi')}</div>`;
 }
 
 function calcBmi(){
   let weight=parseFloat(w.value),height=parseFloat(h.value);
-  if(!weight||!height){
-    bmiHelp.style.display='block';
-    return;
-  }
+  if(!weight||!height){bmiHelp.style.display='block';return;}
   bmiHelp.style.display='none';
   if(wUnit.value==='lb')weight*=0.453592;
   if(hUnit.value==='cm')height/=100;
@@ -230,7 +271,9 @@ function calcBmi(){
   bmiResult.innerHTML=`<div class='reveal'><p>Your BMI: ${bmi.toFixed(2)}</p><p>Status (WHO): ${status}</p></div>`;
 }
 
-// ZODIAC FINDER
+/* ═══════════════════════════════════════
+   ZODIAC FINDER
+═══════════════════════════════════════ */
 const zodiacInfo={
   Aries:{traits:'Bold, energetic',strengths:'Courage, leadership',weaknesses:'Impulsive',lucky:'Red',compat:'Leo, Sagittarius'},
   Taurus:{traits:'Reliable, calm',strengths:'Patience',weaknesses:'Stubborn',lucky:'Green',compat:'Virgo, Capricorn'},
@@ -297,176 +340,225 @@ function showZodiacInfo(s){
   zResult.innerHTML=`<div class='reveal'><p>Your Zodiac Sign: <strong>${s}</strong></p><p>Traits: ${i.traits}</p><p>Strengths: ${i.strengths}</p><p>Weaknesses: ${i.weaknesses}</p><p>Lucky Elements: ${i.lucky}</p><p>Compatibility: ${i.compat}</p></div>`;
 }
 
-const app=document.getElementById('app');
-router();
-</script>
-
-<div class="header">Made by humans on Earth 🌍</div>
-<div id="app"></div>
-<div class="footer">Made by Kiran Sankar</div>
-
-<script>
-const IG_URL="https://instagram.com/kiransankar_";
-const app=document.getElementById("app");
-
-/* ================= ROUTER ================= */
-const apps=[
- {id:"age",name:"Age Calculator",desc:"Exact age & countdown",render:renderAge},
- {id:"lcmhcf",name:"LCM & HCF",desc:"Math made simple",render:renderLcm},
- {id:"bmi",name:"BMI Calculator",desc:"WHO standards",render:renderBMI},
- {id:"zodiac",name:"Zodiac Finder",desc:"Signs & traits",render:renderZodiac},
- {id:"currency",name:"Currency Converter",desc:"Live exchange rates",render:renderCurrency},
- {id:"password",name:"Password Strength Checker",desc:"Check how strong your password is",render:renderPassword}
+/* ═══════════════════════════════════════
+   WHAT DAY WAS IT? — DAY FINDER
+═══════════════════════════════════════ */
+const WEEKDAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONTHS_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAY_PHRASES=[
+  'Running DNA analysis...',
+  'Consulting Elon Musk...',
+  'Hacking NASA for data...',
+  'Calling to Stephen Hawking...',
+  'Calculating with fingers...',
+  'Missed call received from Jadu...',
+  'Watching Instagram reels...',
+  'Going to White House for context...',
+  'Finalising prediction...'
 ];
+let dayFinderTimer=null;
 
-function router(){
- const h=location.hash.replace("#/","");
- if(!h||h==="home") renderHome();
- else if(h==="apps") renderApps();
- else{
-  const a=apps.find(x=>x.id===h);
-  a?a.render():renderHome();
- }
-}
-window.addEventListener("hashchange",router);
+function fmtShort(d){return d.getDate()+' '+MONTHS_SHORT[d.getMonth()]+' '+d.getFullYear();}
 
-/* ================= THEME ================= */
-function toggleTheme(){
- document.body.classList.toggle("light");
- localStorage.setItem("theme",document.body.classList.contains("light")?"light":"dark");
-}
-if(localStorage.getItem("theme")==="light") document.body.classList.add("light");
-
-/* ================= HOME ================= */
-function renderHome(){
- app.innerHTML=`
- <div class="card">
-  <h1>Hey, I'm Kiran Sankar.</h1>
-  <p>I build small tools that solve real problems.</p>
-  <button class="hex-btn" onclick="openIG()">Connect with Creator</button>
-  <button class="hex-btn secondary" onclick="location.hash='#/apps'">Apps by Kiran Sankar</button>
-  <button class="hex-btn secondary" onclick="toggleTheme()">🌙 / ☀️ Toggle Theme</button>
- </div>`;
-}
-
-function renderApps(){
- app.innerHTML=`
- <div class="card">
-  <h2>Apps by Kiran Sankar</h2>
-  ${apps.map(a=>`
-   <div class="list-item" onclick="location.hash='#/${a.id}'">
-    <strong>${a.name}</strong><br><small>${a.desc}</small>
-   </div>`).join("")}
-  <button class="hex-btn secondary" onclick="location.hash='#/home'">Home</button>
- </div>`;
+function renderDayFinder(){
+  app.innerHTML=`<div class='card spacious'>
+    <h2>What Day Was It? 🗓️</h2>
+    <p style='color:var(--muted);font-size:14px;margin-bottom:8px;'>Enter any date and find out what day of the week it was.</p>
+    <div id='dfForm'>
+      <div class='grid'>
+        <div><small style='color:var(--muted)'>Day</small><input id='dfDay' placeholder='DD' type='number' min='1' max='31'></div>
+        <div><small style='color:var(--muted)'>Month</small><input id='dfMonth' placeholder='MM' type='number' min='1' max='12'></div>
+        <div><small style='color:var(--muted)'>Year</small><input id='dfYear' placeholder='YYYY' type='number' min='1' max='9999'></div>
+      </div>
+      <div id='dfHelp' class='helper'>Please enter a valid date.</div>
+      <button class='hex-btn' onclick='startDayFinder()'>Find the Day</button>
+    </div>
+    <div class='day-loading' id='dfLoading'>
+      <div class='spinner-wrap'>
+        <div class='sp-ring r1'></div>
+        <div class='sp-ring r2'></div>
+        <div class='sp-ring r3'></div>
+        <div class='sp-center'></div>
+      </div>
+      <div class='load-phrase' id='dfPhrase'></div>
+    </div>
+    <div id='dfResult'></div>
+    ${commonFooter('dayf')}
+  </div>`;
 }
 
-function openIG(){window.open(IG_URL,"_blank");}
+function startDayFinder(){
+  const day=parseInt(dfDay.value),month=parseInt(dfMonth.value),year=parseInt(dfYear.value);
+  dfHelp.style.display='none';
+  if(!day||!month||!year||day<1||day>31||month<1||month>12||year<1||year>9999){
+    dfHelp.style.display='block';return;
+  }
+  const test=new Date(year,month-1,day);
+  if(test.getFullYear()!==year||test.getMonth()!==month-1||test.getDate()!==day){
+    dfHelp.style.display='block';return;
+  }
+  dfForm.style.display='none';
+  dfResult.innerHTML='';
+  const loading=document.getElementById('dfLoading');
+  loading.style.display='flex';
 
-/* ================= AGE ================= */
-function renderAge(){
- app.innerHTML=`
- <div class="card">
-  <h2>Age Calculator</h2>
-  <input id="dob" placeholder="YYYY-MM-DD">
-  <button class="hex-btn" onclick="calcAge()">Calculate</button>
-  <div id="ageOut"></div>
- </div>`;
-}
-function calcAge(){
- const d=new Date(dob.value);
- if(isNaN(d)) return;
- const y=Math.floor((Date.now()-d)/31557600000);
- ageOut.innerHTML=`<p>You are <strong>${y}</strong> years old.</p>`;
-}
+  let i=0;
+  const interval=10000/DAY_PHRASES.length;
+  const phraseEl=document.getElementById('dfPhrase');
 
-/* ================= LCM ================= */
-function renderLcm(){
- app.innerHTML=`
- <div class="card">
-  <h2>LCM & HCF</h2>
-  <input id="nums" placeholder="e.g. 12,18,24">
-  <button class="hex-btn" onclick="calcLCM()">Calculate</button>
-  <div id="lcmOut"></div>
- </div>`;
-}
-function gcd(a,b){return b?gcd(b,a%b):a}
-function lcm(a,b){return a*b/gcd(a,b)}
-function calcLCM(){
- const n=nums.value.split(",").map(Number);
- lcmOut.innerHTML="LCM: "+n.reduce(lcm);
-}
+  function nextPhrase(){
+    if(i<DAY_PHRASES.length){
+      phraseEl.style.animation='none';
+      void phraseEl.offsetWidth;
+      phraseEl.style.animation='phraseIn .5s ease forwards';
+      phraseEl.textContent=DAY_PHRASES[i++];
+      dayFinderTimer=setTimeout(nextPhrase,interval);
+    }
+  }
+  nextPhrase();
 
-/* ================= BMI ================= */
-function renderBMI(){
- app.innerHTML=`
- <div class="card">
-  <h2>BMI Calculator</h2>
-  <input id="w" placeholder="Weight (kg)">
-  <input id="h" placeholder="Height (m)">
-  <button class="hex-btn" onclick="calcBMI()">Calculate</button>
-  <div id="bmiOut"></div>
- </div>`;
-}
-function calcBMI(){
- const bmi=(w.value/(h.value*h.value)).toFixed(2);
- bmiOut.innerHTML=`BMI: <strong>${bmi}</strong>`;
+  setTimeout(()=>{
+    loading.style.display='none';
+    const date=new Date(year,month-1,day);
+    const prev=new Date(date);prev.setDate(prev.getDate()-1);
+    const next=new Date(date);next.setDate(next.getDate()+1);
+    dfResult.innerHTML=`<div class='reveal'>
+      <div class='day-result-box'>
+        <div class='day-date-lbl'>${fmtShort(date)}</div>
+        <div class='day-big'>${WEEKDAYS[date.getDay()]}</div>
+      </div>
+      <div class='neighbors'>
+        <div class='nbr'><div class='nbr-lbl'>⬅ Day Before</div><div class='nbr-day'>${WEEKDAYS[prev.getDay()]}</div><div class='nbr-date'>${fmtShort(prev)}</div></div>
+        <div class='nbr'><div class='nbr-lbl'>Day After ➡</div><div class='nbr-day'>${WEEKDAYS[next.getDay()]}</div><div class='nbr-date'>${fmtShort(next)}</div></div>
+      </div>
+      <div class='iq-box'>🧠 <strong>YOUR IQ IS GREATER THAN 99.9999999%<br>OF ALL HUMANITY</strong> 🎉</div>
+      <button class='hex-btn secondary' onclick='resetDayFinder()'>↩ Try Another Date</button>
+    </div>`;
+  },10600);
 }
 
-/* ================= ZODIAC ================= */
-function renderZodiac(){
- app.innerHTML=`
- <div class="card">
-  <h2>Zodiac Finder</h2>
-  <input id="z" placeholder="YYYY-MM-DD">
-  <button class="hex-btn" onclick="findZ()">Find</button>
-  <div id="zOut"></div>
- </div>`;
-}
-function findZ(){
- const m=new Date(z.value).getMonth()+1;
- zOut.innerHTML="Your sign depends on date 🌌";
+function resetDayFinder(){
+  clearTimeout(dayFinderTimer);
+  dfForm.style.display='block';
+  dfDay.value='';dfMonth.value='';dfYear.value='';
+  dfResult.innerHTML='';
+  dfHelp.style.display='none';
 }
 
-/* ================= CURRENCY ================= */
-function renderCurrency(){
- app.innerHTML=`
- <div class="card">
-  <h2>Currency Converter</h2>
-  <input id="amt" placeholder="Amount">
-  <select id="from"><option>USD</option><option>INR</option></select>
-  <select id="to"><option>INR</option><option>USD</option></select>
-  <button class="hex-btn" onclick="convert()">Convert</button>
-  <div id="curOut"></div>
-  <p style="font-size:12px;color:var(--muted)">Uses free API. Rates may vary.</p>
- </div>`;
-}
-function convert(){
- curOut.innerHTML="Live API hook ready ✔️";
+/* ═══════════════════════════════════════
+   PASSWORD STRENGTH CHECKER
+═══════════════════════════════════════ */
+const PW_VERDICTS=[
+  {label:'—',         color:'#9AA3B2', emoji:'🤔', bars:0},
+  {label:'Pathetic',  color:'#e05a5a', emoji:'💀', bars:1},
+  {label:'Very Weak', color:'#e05a5a', emoji:'😬', bars:1},
+  {label:'Weak',      color:'#e07040', emoji:'😅', bars:2},
+  {label:'Fair',      color:'#e0944a', emoji:'🤷', bars:3},
+  {label:'Decent',    color:'#d4c843', emoji:'😐', bars:3},
+  {label:'Strong',    color:'#4ade80', emoji:'💪', bars:4},
+  {label:'Very Strong',color:'#4ade80',emoji:'🛡️', bars:4},
+  {label:'BEAST MODE',color:'#a78bfa', emoji:'🔥', bars:5}
+];
+const PW_TIPS=[
+  'Start typing to analyse your password.',
+  'This is extremely weak. Even a child could guess it.',
+  'Very weak. Add uppercase, numbers and symbols.',
+  'Weak. Keep going — more variety needed.',
+  'Fair. Getting better, but not safe enough yet.',
+  'Good. Add a few more characters to make it solid.',
+  'Strong! This is well above average.',
+  'Very strong. Hackers will need years for this one.',
+  'Beast mode 🔥 This password is basically uncrackable.'
+];
+let pwVisible=false;
+
+function renderPasswordChecker(){
+  pwVisible=false;
+  app.innerHTML=`<div class='card spacious'>
+    <h2>Password Strength 🔐</h2>
+    <p style='color:var(--muted);font-size:13px;'>Passwords are checked locally. Nothing is stored or sent.</p>
+    <div class='pw-wrap'>
+      <input id='pwIn' type='password' placeholder='Enter your password...' oninput='evalPw(this.value)' autocomplete='off' spellcheck='false' style='padding-right:46px;letter-spacing:2px;'>
+      <button class='eye-btn' onclick='togglePwEye()' id='eyeBtn'>👁️</button>
+    </div>
+    <div class='bar-row'><div class='bar-seg' id='pb1'></div><div class='bar-seg' id='pb2'></div><div class='bar-seg' id='pb3'></div><div class='bar-seg' id='pb4'></div><div class='bar-seg' id='pb5'></div></div>
+    <div class='verdict-row'>
+      <div>
+        <div class='verdict-lbl' id='pwVerdict' style='color:#9AA3B2'>—</div>
+        <div class='score-chip'>Score: <span class='score-num' id='pwScore'>0</span> / 100</div>
+      </div>
+      <div class='verdict-emoji' id='pwEmoji'>🤔</div>
+    </div>
+    <div class='pw-criteria'>
+      <div class='criterion' id='pc-len'><div class='crit-dot'></div>At least 8 characters</div>
+      <div class='criterion' id='pc-upper'><div class='crit-dot'></div>Uppercase letter (A–Z)</div>
+      <div class='criterion' id='pc-lower'><div class='crit-dot'></div>Lowercase letter (a–z)</div>
+      <div class='criterion' id='pc-num'><div class='crit-dot'></div>Contains a number (0–9)</div>
+      <div class='criterion' id='pc-sym'><div class='crit-dot'></div>Special character (!@#$...)</div>
+      <div class='criterion' id='pc-long'><div class='crit-dot'></div>12+ characters (bonus)</div>
+    </div>
+    <div class='tip-box' id='pwTip'>Start typing to analyse your password.</div>
+    ${commonFooter('passck')}
+  </div>`;
 }
 
-/* ================= PASSWORD ================= */
-function renderPassword(){
- app.innerHTML=`
- <div class="card">
-  <h2>Password Strength Checker</h2>
-  <input id="pw" placeholder="Enter password">
-  <button class="hex-btn" onclick="checkPw()">Check</button>
-  <div id="pwOut"></div>
-  <p style="font-size:12px;color:var(--muted)">
-   Passwords are checked locally. Nothing is stored.
-  </p>
- </div>`;
-}
-function checkPw(){
- const p=pw.value;
- let msg="Very Weak 🤡";
- if(p.length>12) msg="Strong 💪";
- else if(p.length>8) msg="Good 👍";
- else if(p.length>5) msg="Weak ⚠️";
- pwOut.innerHTML=msg;
+function togglePwEye(){
+  pwVisible=!pwVisible;
+  pwIn.type=pwVisible?'text':'password';
+  eyeBtn.textContent=pwVisible?'🙈':'👁️';
 }
 
+function setCrit(id,on){
+  const el=document.getElementById(id);
+  on?el.classList.add('met'):el.classList.remove('met');
+}
+
+function evalPw(val){
+  const hasUpper=/[A-Z]/.test(val);
+  const hasLower=/[a-z]/.test(val);
+  const hasNum=/[0-9]/.test(val);
+  const hasSym=/[^A-Za-z0-9]/.test(val);
+  const lenOk=val.length>=8;
+  const lenLong=val.length>=12;
+
+  setCrit('pc-len',lenOk);setCrit('pc-upper',hasUpper);setCrit('pc-lower',hasLower);
+  setCrit('pc-num',hasNum);setCrit('pc-sym',hasSym);setCrit('pc-long',lenLong);
+
+  let score=0;
+  if(val.length>0){
+    if(lenOk)score+=20;if(hasUpper)score+=15;if(hasLower)score+=15;
+    if(hasNum)score+=20;if(hasSym)score+=20;if(lenLong)score+=10;
+    if(val.length>=16)score=Math.min(score+5,100);
+  }
+  document.getElementById('pwScore').textContent=score;
+
+  let level=0;
+  if(val.length>0){
+    if(score<=15)level=1;
+    else if(score<=30)level=2;
+    else if(score<=45)level=3;
+    else if(score<=55)level=4;
+    else if(score<=65)level=5;
+    else if(score<=75)level=6;
+    else if(score<=89)level=7;
+    else level=8;
+  }
+
+  const v=PW_VERDICTS[level];
+  document.getElementById('pwVerdict').textContent=v.label;
+  document.getElementById('pwVerdict').style.color=v.color;
+  document.getElementById('pwEmoji').textContent=v.emoji;
+  document.getElementById('pwScore').style.color=v.color;
+  document.getElementById('pwTip').textContent=PW_TIPS[level];
+
+  const barColors=['#e05a5a','#e05a5a','#e07040','#e0944a','#d4c843','#4ade80','#4ade80','#a78bfa'];
+  for(let i=1;i<=5;i++){
+    const seg=document.getElementById('pb'+i);
+    seg.style.background=i<=v.bars?(barColors[level-1]||'#1e1e2e'):'#1e1e2e';
+  }
+}
+
+/* ── Boot ── */
 router();
 </script>
 </body>
